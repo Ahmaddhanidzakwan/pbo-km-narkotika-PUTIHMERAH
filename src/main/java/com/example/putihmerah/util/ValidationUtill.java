@@ -1,6 +1,6 @@
 package com.example.putihmerah.util;
 
-package com.example.pbokmnarkotikamerahputih.util;
+package com.example.putihmerah.util;
 
 public class ValidationUtil {
 
