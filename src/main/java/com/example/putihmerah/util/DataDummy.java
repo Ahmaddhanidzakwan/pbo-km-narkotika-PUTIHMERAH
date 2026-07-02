@@ -38,3 +38,42 @@ public class DataDummy {
                 {"54/Pid.Sus/2024/PN.Sby", "PN Surabaya", "01-02-2024", "Warda Andreansyah Bin Suwarso (alm)", 24, "Sabu‑Sabu (Metamfetamina Golongan I)", 0.009, "Pasal 112 Ayat (1) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Memiliki, Menyimpan & Menguasai Narkotika Golongan I Bukan Tanaman, berstatus residivis", 66, 1000000000.0, "Heru Hanindyo, S.H., M.H., LLM."},
                 {"55/Pid.Sus/2024/PN Sby", "PN Surabaya", "26-03-2024", "ILHAM REZA IZZUDDIN Alias EKO REZA BIN EKO SUHARTONO", 25, "Ganja (Cannabis Golongan I Bentuk Tanaman)", 9.197, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Menjual, Membeli, Menerima & Menjadi Perantara Jual Beli Narkotika Golongan I Bentuk Tanaman", 78, 1000000000.0, "Antyo Harry Susetyo, S.H."},
                 {"58/Pid.Sus/2024/PN.Sby", "PN Surabaya", "21-03-2024", "KASMANTO BIN SLAMET", 38, "Sabu‑Sabu (Metamfetamina Golongan I)", 0.079, "Pasal 112 Ayat (1) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Memiliki & Menguasai Narkotika Golongan I, juga mengkonsumsi sendiri", 48, 1000000000.0, "Saifudin Zuhri, S.H., M.Hum."},
+                {"61/Pid.Sus/2024/PN Sby", "PN Surabaya", "19-02-2024", "FAUSEN ALS KACONG BIN SONHAJI", 23, "Sabu‑Sabu (Metamfetamina Golongan I)", 0.551, "Pasal 112 Ayat (1) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Memiliki, Menyimpan, Menguasai & Menyediakan Narkotika Golongan I", 78, 800000000.0, "Taufan Mandala, S.H., M.Hum."},
+                {"62/Pid.Sus/2024/PN Sby", "PN Surabaya", "22-02-2024", "Muhammad Rohman Bin Lukdin", 45, "Sabu‑Sabu (Metamfetamina Golongan I)", 0.069, "Pasal 112 Ayat (1) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Menguasai Narkotika Golongan I, bertindak sebagai kurir", 66, 900000000.0, "Dr. Nurnaningsih Amriani, S.H., M.H."},
+                {"65/Pid.Sus/2024/PN Sby", "PN Surabaya", "25-03-2024", "Musaffa Bin Umar", 36, "Ekstasi (MDMA / 3,4‑Metilendioksimetamfetamina Golongan I)", 7.972, "Pasal 114 Ayat (2) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Membeli, Menjadi Perantara Jual Beli & Menjual Narkotika Golongan I >5 Gram", 84, 1000000000.0, "Ferdinand Marcus Leander, S.H., M.H."},
+                {"66/Pid.Sus/2024/PN Sby", "PN Surabaya", "04-03-2024", "Herianto Alias Heri Bin Sukri (alm)", 40, "Sabu‑Sabu (Metamfetamina Golongan I)", 3.14, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Membeli & Menjual Narkotika Golongan I, dibagi kemasan eceran", 72, 1000000000.0, "Toniwidjaya Hansberd Hilly, S.H."},
+                {"67/Pid.Sus/2024/PN Sby", "PN Surabaya", "14-03-2024", "LANANG FIRDAUS INGPRANATA BUANA bin RADEN MONMOWANGSA", 20, "Sinte / Tembakau Gorila (MDMB‑4en PINACA Golongan I)", 38.678, "Pasal 114 Ayat (2) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Membeli lewat medsos, memecah kemasan & menjual kembali secara daring", 120, 1000000000.0, "Hj. Halima Umaternate, S.H., M.H."},
+                {"79/Pid.Sus/2024/PN Sby", "PN Surabaya", "25-03-2024", "MOCH. NOPEL BIN BINAKRAM (ALM)", 42, "Sabu‑Sabu (Metamfetamina Golongan I)", 0.513, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Membeli, Memecah Kemasan & Menjual Kembali secara eceran", 72, 1000000000.0, "Djuanto, S.H., M.H."},
+                {"80/Pid.Sus/2024/PN.Sby", "PN Surabaya", "18-03-2024", "MOCH. DAHLAN bin RASIT (Alm)", 45, "Sabu‑Sabu (Metamfetamina Golongan I)", 5.018, "Pasal 114 Ayat (2) UU No. 35 Tahun 2009", "Tanpa Hak / Melawan Hukum Membeli, Menawarkan, Menjual, Menjadi Perantara & Menyerahkan Narkotika Gol I >5 gram", 78, 1000000000.0, "Heru Hanindyo, S.H., M.H., LL.M."},
+                {"84/Pid.Sus/2024/PN Sby", "PN Surabaya", "20-03-2024", "Husnul Yaqin als Asman Bin Zahrah", 41, "Sabu-Sabu", 0.639, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 90, 1000000000.0, "Dr. Nurnaningsih Amriani, S.H., M.H."},
+                {"87/Pid.Sus/2024/PN Sby", "PN Surabaya", "19-03-2024", "Yuli Subagyo Bin Irsad (alm)", 46, "Sabu-Sabu", 1.681, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 92, 1000000000.0, "Ni Putu Sri Indayani, S.H., M.H."},
+                {"88/Pid.Sus/2024/PN Sby", "PN Surabaya", "25-03-2024", "Ahmad Faishol als Faishol Bin Shobari", 29, "Ganja & Sabu", 145.14, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 144, 2000000000.0, "Ferdinand Marcus Leander, S.H., M.H."},
+                {"97/Pid.Sus/2024/PN Sby", "PN Surabaya", "01-04-2024", "Dimas Agus Setiawan Bin Dadik Masturiawan", 21, "Sabu-Sabu", 0.259, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 84, 1000000000.0, "Ferdinand Marcus Leander, S.H., M.H."},
+                {"121/Pid.Sus/2024/PN Sby", "PN Surabaya", "20-03-2024", "Tri Melania Hendriany Binti Paulus Hendro Buniko", 44, "Sabu-Sabu", 20.511, "Pasal 114 Ayat (2) UU No. 35 Tahun 2009", "Pengedar/Perantara", 114, 1000000000.0, "Khadwanto, S.H."},
+                {"124/Pid.Sus/2024/PN Sby", "PN Surabaya", "19-03-2024", "Ari Budiatmaja Bin Budiono (alm)", 35, "Sabu-Sabu", 9.318, "Pasal 114 Ayat (2) UU No. 35 Tahun 2009", "Perantara", 60, 800000000.0, "Suparno, S.H., M.H."},
+                {"126/Pid.Sus/2024/PN Sby", "PN Surabaya", "01-04-2024", "Rahmad Indra Bin Boenadi", 37, "Sabu-Sabu", 1.863, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 72, 1000000000.0, "Ferdinand Marcus Leander, S.H., M.H."},
+                {"130/Pid.Sus/2024/PN Sby", "PN Surabaya", "19-03-2024", "Suryanto Alias Yanto Bin Suroso", 49, "Sabu-Sabu", 0.777, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 78, 1410000000.0, "Cokia Ana Pontia O, S.H., M.H."},
+                {"143/Pid.Sus/2024/PN Sby", "PN Surabaya", "27-03-2024", "Anty Arianty Alias Jupe Binti Ujang Sopyan Iskandar", 29, "Sabu-Sabu", 10.0, "Pasal 114 Ayat (2) UU No. 35 Tahun 2009", "Pengedar/Perantara", 60, 1000000000.0, "I Ketut Kimiarsa, S.H., M.H."},
+                {"148/Pid.Sus/2024/PN Sby", "PN Surabaya", "08-03-2024", "Sahrul Bin Sukandar", 21, "Sabu-Sabu", 0.962, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 82, 1000000000.0, "Rudito Surotomo, S.H., M.H."},
+                {"174/Pid.Sus/2024/PN Sby", "PN Surabaya", "18-03-2024", "Jeffri Andriyanto als Jeje Bin Sunarto", 30, "Sabu-Sabu", 20.702, "Pasal 114 Ayat (2) UU No. 35 Tahun 2009", "Pengedar/Bandar", 108, 800000000.0, "Toniwidjaya Hansberd Hilly, S.H."},
+                {"186/Pid.Sus/2024/PN Sby", "PN Surabaya", "07-03-2024", "Agus Arianto Alias Doweh Bin Sukimin", 45, "Sabu-Sabu", 0.61, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 72, 1500000000.0, "Dr. Nurnaningsih Amriani, S.H., M.H."},
+                {"196/Pid.Sus/2024/PN Sby", "PN Surabaya", "28-03-2024", "Soepranu Bin Sulaiman (alm)", 63, "Sabu-Sabu", 2.48, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 60, 800000000.0, "Abu Achmad Sidqi Amsya, S.H."},
+                {"207/Pid.Sus/2024/PN Sby", "PN Surabaya", "04-03-2024", "Muhammad Fuad Bin Ma'am (alm)", 31, "Sabu-Sabu", 2.353, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar", 84, 1000000000.0, "Dr. Nurnaningsih Amriani, S.H., M.H."},
+                {"214/Pid.Sus/2024/PN Sby", "PN Surabaya", "26-03-2024", "Ryan Nur Rudianto Bin Murdianto", 28, "Sabu-Sabu", 3.76, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar/Perantara", 72, 1000000000.0, "Ni Putu Sri Indayani, S.H., M.H."},
+                {"253/Pid.Sus/2024/PN Sby", "PN Surabaya", "21-03-2024", "Agung Prasetya Bin Ratin Pranoto", 42, "Sabu-Sabu", 3.828, "Pasal 114 Ayat (1) UU No. 35 Tahun 2009", "Pengedar/Perantara", 84, 1000000000.0, "Alex Adam Faisal, S.H."}
+        };
+
+        for (Object[] d : data) {
+            try {
+                Putusan p = new Putusan(
+                        (String) d[0], (String) d[1], (String) d[2], (String) d[3],
+                        (int) d[4],    (String) d[5], (double) d[6], (String) d[7],
+                        (String) d[8], (int) d[9],    (double) d[10],(String) d[11]
+                );
+                repository.simpan(p);
+            } catch (Exception e) {
+                System.err.println("Gagal memuat dummy: " + d[0] + " - " + e.getMessage());
+            }
+        }
+    }
+}
