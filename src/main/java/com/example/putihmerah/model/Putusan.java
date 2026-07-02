@@ -1,5 +1,3 @@
-package com.example.putihmerah;
-
 package com.example.putihmerah.model;
 
 public class Putusan {

@@ -1,4 +1,4 @@
-package com.example.putihmerah;
+package com.example.putihmerah.model;
 
     package  com.example.putihmerah.model;
 public interface IPelaporan {
