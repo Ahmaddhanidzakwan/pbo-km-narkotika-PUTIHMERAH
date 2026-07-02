@@ -47,9 +47,9 @@ public class StatistikPutusan implements IPelaporan {
         rataRataDenda = totalDenda / daftar.size();
 
         jenisNarkotikaTerbanyak = freqNarkotika.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(e -> e.getKey() + " (" + e.getValue() + " kasus)")
-                .orElse("Tidak ada data");
+            .max(Map.Entry.comparingByValue())
+            .map(e -> e.getKey() + " (" + e.getValue() + " kasus)")
+            .orElse("Tidak ada data");
 
         distribusiPeran = new String[freqPeran.size()];
         int idx = 0;
@@ -61,20 +61,17 @@ public class StatistikPutusan implements IPelaporan {
     @Override
     public void tampilkanLaporan() {
         System.out.println("==================================================");
-        System.out.println("        LAPORAN STATISTIK PUTUSAN PERKARA NARKOTIKA        ");
+        System.out.println(" LAPORAN STATISTIK PUTUSAN NARKOTIKA");
         System.out.println("==================================================");
-        System.out.println();
-
-        System.out.printf("Jumlah Total Putusan                : %d%n", totalPutusan);
-        System.out.printf("Rata-rata Masa Hukuman              : %.2f Bulan%n", rataRataVonis);
-        System.out.printf("Rata-rata Nilai Barang Bukti        : Rp %,2f%n", rataDataDenda);
-        System.out.printf("Jenis Narkotika Paling Sering Ditemukan : %s%n", jenisNarkotikaTerbanyak);
-        System.out.println();
-
-        System.out.println("--- RINCIAN PERSENTASE BERDASARKAN JENIS ---");
-        for (String baris : distribusiPerJenis) {
+        System.out.printf("Total Putusan          : %d%n", totalPutusan);
+        System.out.printf("Rata-rata Vonis         : %.1f bulan%n", rataRataVonis);
+        System.out.printf("Rata-rata Denda         : Rp %,.2f%n", rataRataDenda);
+        System.out.printf("Jenis Narkotika Terbanyak: %s%n", jenisNarkotikaTerbanyak);
+        System.out.println("Distribusi Peran Terdakwa:");
+        for (String baris : distribusiPeran) {
             System.out.println("  - " + baris);
         }
+        System.out.println("==================================================");
     }
 
     public int getTotalPutusan()                 { return totalPutusan; }
@@ -85,14 +82,14 @@ public class StatistikPutusan implements IPelaporan {
 
     public Putusan getVonisTertinggi() {
         return daftar.stream()
-                .max((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
-                .orElse(null);
+            .max((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
+            .orElse(null);
     }
 
     public Putusan getVonisTerendah() {
         return daftar.stream()
-                .min((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
-                .orElse(null);
+            .min((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
+            .orElse(null);
     }
 
     public Map<String, Integer> getDistribusiJenisNarkotika() {
@@ -107,4 +104,3 @@ public class StatistikPutusan implements IPelaporan {
         return map;
     }
 }
-
