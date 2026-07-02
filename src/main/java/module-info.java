@@ -1,10 +1,14 @@
-module com.example.putihmerah {
+module com.example.putihmerah. {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
 
+    exports  com.example.putihmerah.app;
+    exports  com.example.putihmerah.view;
+    exports  com.example.putihmerah.controller;
+    exports  com.example.putihmerah.model;
+    exports  com.example.putihmerah.util;
 
-    opens com.example.putihmerah to javafx.fxml;
-    exports com.example.putihmerah;
-    exports com.example.putihmerah.model;
-    opens com.example.putihmerah.model to javafx.fxml;
+    opens  com.example.putihmerah.view to javafx.graphics, javafx.fxml;
+    opens  com.example.putihmerah.app to javafx.graphics;
 }

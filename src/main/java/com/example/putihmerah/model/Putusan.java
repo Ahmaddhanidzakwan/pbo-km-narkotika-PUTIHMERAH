@@ -1,5 +1,5 @@
 package com.example.putihmerah.model;
-*
+
 public class Putusan {
 
     private static int jumlahDibuat = 0;
@@ -63,14 +63,14 @@ public class Putusan {
     public void setNamaTerdakwa(String namaTerdakwa)         { this.namaTerdakwa = namaTerdakwa; }
 
     public void setUmurTerdakwa(int umurTerdakwa) {
-        if (umurTerdakwa < 0) throw new IllegalArgumentException("Umur tidak boleh bernilai negatif");
+        if (umurTerdakwa < 0) throw new IllegalArgumentException("Umur tidak boleh negatif.");
         this.umurTerdakwa = umurTerdakwa;
     }
 
     public void setJenisNarkotika(String jenisNarkotika)     { this.jenisNarkotika = jenisNarkotika; }
 
     public void setBeratBarangBukti(double beratBarangBukti) {
-        if (beratBarangBukti < 0) throw new IllegalArgumentException("Berat barang bukti tidak boleh kurang dari nol");
+        if (beratBarangBukti < 0) throw new IllegalArgumentException("Berat barang bukti tidak boleh negatif.");
         this.beratBarangBukti = beratBarangBukti;
     }
 
@@ -78,12 +78,12 @@ public class Putusan {
     public void setPeranTerdakwa(String peranTerdakwa)       { this.peranTerdakwa = peranTerdakwa; }
 
     public void setVonisHukuman(int vonisHukuman) {
-        if (vonisHukuman < 0) throw new IllegalArgumentException("Masa vonis hukuman tidak boleh bernilai negatif");
+        if (vonisHukuman < 0) throw new IllegalArgumentException("Vonis hukuman tidak boleh negatif.");
         this.vonisHukuman = vonisHukuman;
     }
 
     public void setVonisDenda(double vonisDenda) {
-        if (vonisDenda < 0) throw new IllegalArgumentException("Nilai denda vonis tidak boleh bernilai negatif");
+        if (vonisDenda < 0) throw new IllegalArgumentException("Vonis denda tidak boleh negatif.");
         this.vonisDenda = vonisDenda;
     }
 

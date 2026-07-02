@@ -2,6 +2,7 @@ package com.example.putihmerah.model;
 
 import java.util.ArrayList;
 
+
 public class StatistikPutusanTahunan extends StatistikPutusan {
 
     private final String tahunFilter;
