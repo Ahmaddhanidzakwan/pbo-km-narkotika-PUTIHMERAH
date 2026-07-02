@@ -1,7 +1,5 @@
 package com.example.putihmerah.util;
 
-package com.example.putihmerah.util;
-
 import com.example.putihmerah.model.KnowledgeRepository;
 import com.example.putihmerah.model.Putusan;
 
