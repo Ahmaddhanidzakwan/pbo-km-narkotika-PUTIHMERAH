@@ -1,7 +1,5 @@
 package com.example.putihmerah.view;
 
-package com.example.putihmerah.view;
-
 import com.example.putihmerah.controller.KnowledgeController;
 import com.example.putihmerah.model.Putusan;
 import javafx.collections.FXCollections;
