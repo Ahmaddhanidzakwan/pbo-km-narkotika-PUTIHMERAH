@@ -4,17 +4,14 @@ import com.example.putihmerah.controller.KnowledgeController;
 import com.example.putihmerah.model.Putusan;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.shape.Circle;
 
 import java.util.Map;
-
 
 public class StatistikView {
 
@@ -22,15 +19,23 @@ public class StatistikView {
     private final ScrollPane root;
     private final VBox contentBox;
 
+
+    private final String BG_MAIN = "#0B1120";
+    private final String BG_CARD = "#111827";
+    private final String BORDER_COLOR = "#1F2937";
+    private final String TEXT_MUTED = "#94A3B8";
+    private final String TEXT_WHITE = "#F8FAFC";
+
     public StatistikView(KnowledgeController controller) {
         this.controller = controller;
-        contentBox = new VBox(18);
-        contentBox.setPadding(new Insets(24, 28, 28, 28));
-        contentBox.setStyle("-fx-background-color: #0B1622;");
+        contentBox = new VBox(24);
+        contentBox.setPadding(new Insets(32, 40, 40, 40));
+        contentBox.setStyle("-fx-background-color: " + BG_MAIN + ";");
 
         root = new ScrollPane(contentBox);
         root.setFitToWidth(true);
-        root.setStyle("-fx-background-color: #0B1622; -fx-background: #0B1622;");
+        root.setStyle("-fx-background: " + BG_MAIN + "; -fx-background-color: " + BG_MAIN + "; " +
+                "-fx-viewport-background: " + BG_MAIN + "; -fx-border-color: transparent;");
         refresh();
     }
 
@@ -40,42 +45,64 @@ public class StatistikView {
         contentBox.getChildren().clear();
 
 
-        HBox kartuRow = new HBox(16);
+        VBox headerBox = new VBox(6);
+        Label judulStat = new Label("Dashboard Analitik Putusan");
+        judulStat.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-size: 24px; " +
+                "-fx-font-weight: bold; -fx-text-fill: " + TEXT_WHITE + ";");
+        Label subJudulStat = new Label("Tinjauan komprehensif data perkara narkotika dan statistik pengadilan.");
+        subJudulStat.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-size: 13px; -fx-text-fill: " + TEXT_MUTED + ";");
+        headerBox.getChildren().addAll(judulStat, subJudulStat);
+
+
+        HBox kartuRow = new HBox(20);
+
         kartuRow.getChildren().addAll(
-                kartuStatistik("Total Putusan", String.valueOf(controller.getTotalPutusan()),
-                        "🔨", "#3B82C4", "#16273A"),
-                kartuStatistik("Rata-rata Vonis", String.format("%.1f bulan", controller.getRataRataVonis()),
-                        "🕐", "#2DD4BF", "#102A28"),
-                kartuStatistik("Rata-rata Denda", String.format("Rp %,.2f", controller.getRataRataDenda()),
-                        "🪙", "#D9A441", "#2A2113"),
-                kartuStatistik("Narkotika Terbanyak", controller.getNarkotikaTerbanyak(),
-                        "🌿", "#A78BFA", "#221A33")
+                kartuStatistik("Total Putusan", String.valueOf(controller.getTotalPutusan()), "TP",
+                        "#38BDF8", "#0EA5E9", "rgba(56, 189, 248, 0.1)"),
+                kartuStatistik("Rata-rata Vonis", String.format("%.1f bulan", controller.getRataRataVonis()), "RV",
+                        "#34D399", "#10B981", "rgba(52, 211, 153, 0.1)"),
+                kartuStatistik("Rata-rata Denda", String.format("Rp %,.2f", controller.getRataRataDenda()), "RD",
+                        "#FBBF24", "#F59E0B", "rgba(251, 191, 36, 0.1)"),
+                kartuStatistik("Narkotika Terbanyak", controller.getNarkotikaTerbanyak(), "NT",
+                        "#C084FC", "#A855F7", "rgba(192, 132, 252, 0.1)")
         );
-        for (var node : kartuRow.getChildren()) HBox.setHgrow(node, Priority.ALWAYS);
+        for (var node : kartuRow.getChildren()) {
+            HBox.setHgrow(node, Priority.ALWAYS);
+            ((VBox) node).setPrefWidth(200); // Memaksa pembagian lebar rata
+        }
 
 
         Putusan pMax = controller.getVonisTertinggi();
         Putusan pMin = controller.getVonisTerendah();
-        HBox vonisRow = new HBox(16);
-        if (pMax != null) vonisRow.getChildren().add(kartuVonis("Vonis Tertinggi", pMax, "#3B82C4"));
-        if (pMin != null) vonisRow.getChildren().add(kartuVonis("Vonis Terendah",  pMin, "#D9714A"));
-        for (var node : vonisRow.getChildren()) HBox.setHgrow(node, Priority.ALWAYS);
+        HBox vonisRow = new HBox(20);
+        if (pMax != null) {
+            HBox cardMax = kartuVonis("Puncak Vonis Tertinggi", pMax, "#EF4444", "rgba(239, 68, 68, 0.1)");
+            HBox.setHgrow(cardMax, Priority.ALWAYS);
+            cardMax.setMaxWidth(Double.MAX_VALUE);
+            vonisRow.getChildren().add(cardMax);
+        }
+        if (pMin != null) {
+            HBox cardMin = kartuVonis("Batas Vonis Terendah",  pMin, "#3B82F6", "rgba(59, 130, 246, 0.1)");
+            HBox.setHgrow(cardMin, Priority.ALWAYS);
+            cardMin.setMaxWidth(Double.MAX_VALUE);
+            vonisRow.getChildren().add(cardMin);
+        }
 
 
-        HBox bottomRow = new HBox(18);
-        VBox chartNarkotika = buildBarChartPanel(
-                "Distribusi Jenis Narkotika", controller.getDistribusiNarkotika(), "#2DD4BF");
-        VBox listPengadilan = buildListPanel(
-                "Distribusi Per Pengadilan", controller.getDistribusiPengadilan());
-        VBox chartPeran = buildBarChartPanel(
-                "Distribusi Peran Terdakwa", mapFromArray(controller.getDistribusiPeran()), "#F2994A");
+        HBox bottomRow = new HBox(20);
+        VBox chartNarkotika = buildBarChartPanel("Distribusi Narkotika", controller.getDistribusiNarkotika(), "#34D399", "#10B981");
+        VBox listPengadilan = buildListPanel("Distribusi Pengadilan", controller.getDistribusiPengadilan());
+        VBox chartPeran = buildBarChartPanel("Peran Terdakwa", mapFromArray(controller.getDistribusiPeran()), "#FBBF24", "#F59E0B");
+
+
+        chartNarkotika.setPrefWidth(300); chartNarkotika.setMaxWidth(Double.MAX_VALUE); HBox.setHgrow(chartNarkotika, Priority.ALWAYS);
+        listPengadilan.setPrefWidth(300); listPengadilan.setMaxWidth(Double.MAX_VALUE); HBox.setHgrow(listPengadilan, Priority.ALWAYS);
+        chartPeran.setPrefWidth(300);     chartPeran.setMaxWidth(Double.MAX_VALUE);     HBox.setHgrow(chartPeran, Priority.ALWAYS);
 
         bottomRow.getChildren().addAll(chartNarkotika, listPengadilan, chartPeran);
-        for (var node : bottomRow.getChildren()) HBox.setHgrow(node, Priority.ALWAYS);
 
-        contentBox.getChildren().addAll(kartuRow, vonisRow, bottomRow);
+        contentBox.getChildren().addAll(headerBox, kartuRow, vonisRow, bottomRow);
     }
-
 
     private Map<String, Integer> mapFromArray(String[] arr) {
         Map<String, Integer> map = new java.util.LinkedHashMap<>();
@@ -92,26 +119,32 @@ public class StatistikView {
         return map;
     }
 
-    private VBox kartuStatistik(String label, String nilai, String icon, String borderColor, String bgColor) {
-        VBox card = new VBox(10);
-        card.setPadding(new Insets(16, 18, 16, 18));
-        card.setStyle("-fx-background-color: " + bgColor + "; " +
-                "-fx-border-color: " + borderColor + "; -fx-border-width: 1.5; " +
-                "-fx-background-radius: 12; -fx-border-radius: 12;");
 
-        HBox topRow = new HBox(8);
+    private VBox kartuStatistik(String label, String nilai, String inisial, String colorLight, String colorDark, String iconBgColor) {
+        VBox card = new VBox(12);
+        card.setPadding(new Insets(20));
+        card.setStyle("-fx-background-color: " + BG_CARD + "; -fx-border-color: " + BORDER_COLOR + "; " +
+                "-fx-border-width: 1; -fx-background-radius: 12; -fx-border-radius: 12;");
+
+        HBox topRow = new HBox(12);
         topRow.setAlignment(Pos.CENTER_LEFT);
+
         Label lbl = new Label(label);
-        lbl.setStyle("-fx-text-fill: #B8CCDA; -fx-font-size: 12px;");
+        lbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: " + TEXT_MUTED + ";");
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        Label iconLbl = new Label(icon);
-        iconLbl.setStyle("-fx-font-size: 18px;");
-        topRow.getChildren().addAll(lbl, spacer, iconLbl);
+
+        Label iconLbl = new Label(inisial); // Menggunakan teks inisial aman
+        iconLbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: " + colorLight + ";");
+        StackPane iconBox = new StackPane(iconLbl);
+        iconBox.setPrefSize(36, 36);
+        iconBox.setStyle("-fx-background-color: " + iconBgColor + "; -fx-background-radius: 10;");
+
+        topRow.getChildren().addAll(lbl, spacer, iconBox);
 
         Label val = new Label(nilai);
-        val.setFont(Font.font("System", FontWeight.BOLD, 22));
-        val.setStyle("-fx-text-fill: " + borderColor + ";");
+        val.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: " + TEXT_WHITE + ";");
         val.setWrapText(true);
 
         card.getChildren().addAll(topRow, val);
@@ -119,134 +152,164 @@ public class StatistikView {
     }
 
 
-    private HBox kartuVonis(String label, Putusan p, String accentColor) {
-        HBox card = new HBox(14);
+    private HBox kartuVonis(String label, Putusan p, String accentColor, String bgAccent) {
+        HBox card = new HBox(16);
         card.setAlignment(Pos.CENTER_LEFT);
-        card.setPadding(new Insets(16, 20, 16, 20));
-        card.setStyle("-fx-background-color: #0F1D2B; -fx-background-radius: 12; " +
-                "-fx-border-color: #16273A; -fx-border-width: 1; -fx-border-radius: 12;");
-
+        card.setPadding(new Insets(20));
+        card.setStyle("-fx-background-color: " + BG_CARD + "; -fx-background-radius: 12; " +
+                "-fx-border-color: " + BORDER_COLOR + "; -fx-border-width: 1; -fx-border-radius: 12;");
 
         String inisial = p.getNamaTerdakwa().length() >= 2
                 ? p.getNamaTerdakwa().substring(0, 2).toUpperCase()
                 : p.getNamaTerdakwa().toUpperCase();
+
         StackPane avatar = new StackPane();
-        javafx.scene.shape.Circle circle = new javafx.scene.shape.Circle(26);
-        circle.setFill(Color.web("#0F1D2B"));
-        circle.setStroke(Color.web(accentColor));
-        circle.setStrokeWidth(2);
+        Circle circle = new Circle(24);
+        circle.setFill(Color.web(bgAccent));
+
         Label avatarText = new Label(inisial);
-        avatarText.setStyle("-fx-text-fill: " + accentColor + "; -fx-font-weight: bold;");
+        avatarText.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: " + accentColor + ";");
         avatar.getChildren().addAll(circle, avatarText);
 
-        VBox info = new VBox(2);
-        Label lbl = new Label(label);
-        lbl.setStyle("-fx-text-fill: #8FA8BD; -fx-font-size: 11px;");
-        Label nama = new Label(p.getNamaTerdakwa() + " (" + p.getVonisHukuman() + " bulan)");
-        nama.setStyle("-fx-text-fill: #E8F4FD; -fx-font-size: 14px; -fx-font-weight: bold;");
-        Label nomor = new Label(p.getNomorPerkara() + " — " + p.getPengadilan());
-        nomor.setStyle("-fx-text-fill: #5B7B95; -fx-font-size: 11px;");
-        info.getChildren().addAll(lbl, nama, nomor);
+        VBox info = new VBox(4);
+        Label lbl = new Label(label.toUpperCase());
+        lbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: " + accentColor + "; -fx-letter-spacing: 1px;");
 
+        Label nama = new Label(p.getNamaTerdakwa() + " — " + p.getVonisHukuman() + " Bulan");
+        nama.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: " + TEXT_WHITE + ";");
+        nama.setWrapText(false);
+
+        Label nomor = new Label(p.getNomorPerkara() + "  •  " + p.getPengadilan());
+        nomor.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: " + TEXT_MUTED + ";");
+
+        info.getChildren().addAll(lbl, nama, nomor);
         card.getChildren().addAll(avatar, info);
         return card;
     }
 
 
-    private VBox buildBarChartPanel(String judul, Map<String, Integer> data, String barColor) {
-        VBox box = new VBox(12);
-        box.setPadding(new Insets(16));
-        box.setStyle("-fx-background-color: #0F1D2B; -fx-background-radius: 12; " +
-                "-fx-border-color: #16273A; -fx-border-width: 1; -fx-border-radius: 12;");
+    private VBox buildBarChartPanel(String judul, Map<String, Integer> data, String colorLight, String colorDark) {
+        VBox box = new VBox(16);
+        box.setPadding(new Insets(20));
+        box.setStyle("-fx-background-color: " + BG_CARD + "; -fx-background-radius: 12; " +
+                "-fx-border-color: " + BORDER_COLOR + "; -fx-border-width: 1; -fx-border-radius: 12;");
 
         Label lbl = new Label(judul);
-        lbl.setFont(Font.font("System", FontWeight.BOLD, 13));
-        lbl.setStyle("-fx-text-fill: #E8F4FD;");
+        lbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: " + TEXT_WHITE + ";");
+        box.getChildren().add(lbl);
 
         if (data.isEmpty()) {
-            box.getChildren().addAll(lbl, new Label("Tidak ada data."));
+            Label emptyLbl = new Label("Belum ada data tersedia.");
+            emptyLbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-text-fill: #475569; -fx-font-style: italic;");
+            box.getChildren().add(emptyLbl);
             return box;
         }
 
         int maxVal = data.values().stream().max(Integer::compareTo).orElse(1);
-        double chartW = 280;
-        double barH = 22, gap = 14;
-        double canvasH = data.size() * (barH + gap);
 
-        Canvas canvas = new Canvas(chartW, canvasH);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        int idx = 0;
         for (Map.Entry<String, Integer> entry : data.entrySet()) {
-            double y = idx * (barH + gap);
-            double maxBarW = chartW - 90;
-            double barW = Math.max(18, (double) entry.getValue() / maxVal * maxBarW);
+            VBox itemRow = new VBox(8);
 
+            HBox textRow = new HBox(8);
+            textRow.setAlignment(Pos.CENTER_LEFT);
 
-            gc.setFill(Color.web("#B8CCDA"));
-            gc.fillText(entry.getKey(), 0, y + 10);
+            Label nameLbl = new Label(entry.getKey());
+            nameLbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #CBD5E1;");
 
+            nameLbl.setWrapText(false);
+            nameLbl.setMaxWidth(160); // Batas aman lebar teks sebelum dipotong
+            Tooltip tooltip = new Tooltip(entry.getKey()); // Munculkan teks asli jika kursor ditaruh di atasnya
+            tooltip.setStyle("-fx-font-size: 12px;");
+            Tooltip.install(nameLbl, tooltip);
 
-            gc.setFill(Color.web(barColor));
-            gc.fillRoundRect(0, y + 14, barW, 10, 10, 10);
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
 
-            idx++;
+            Label valueLbl = new Label(entry.getValue() + " Perkara");
+            valueLbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: " + colorLight + ";");
+
+            valueLbl.setMinWidth(Region.USE_PREF_SIZE);
+
+            textRow.getChildren().addAll(nameLbl, spacer, valueLbl);
+
+            double persentase = (double) entry.getValue() / maxVal;
+            HBox barContainer = new HBox();
+            barContainer.setStyle("-fx-background-color: #1E293B; -fx-background-radius: 6;");
+            barContainer.setMinHeight(8);
+            barContainer.setMaxHeight(8);
+
+            Region pillBar = new Region();
+            pillBar.setStyle("-fx-background-color: linear-gradient(to right, " + colorDark + ", " + colorLight + "); -fx-background-radius: 6;");
+            pillBar.setMinHeight(8);
+            pillBar.setMaxHeight(8);
+            pillBar.prefWidthProperty().bind(barContainer.widthProperty().multiply(persentase));
+
+            barContainer.getChildren().add(pillBar);
+            itemRow.getChildren().addAll(textRow, barContainer);
+            box.getChildren().add(itemRow);
         }
 
-        box.getChildren().addAll(lbl, canvas);
         return box;
     }
 
 
     private VBox buildListPanel(String judul, Map<String, Integer> data) {
-        VBox box = new VBox(10);
-        box.setPadding(new Insets(16));
-        box.setStyle("-fx-background-color: #0F1D2B; -fx-background-radius: 12; " +
-                "-fx-border-color: #16273A; -fx-border-width: 1; -fx-border-radius: 12;");
+        VBox box = new VBox(12);
+        box.setPadding(new Insets(20));
+        box.setStyle("-fx-background-color: " + BG_CARD + "; -fx-background-radius: 12; " +
+                "-fx-border-color: " + BORDER_COLOR + "; -fx-border-width: 1; -fx-border-radius: 12;");
 
         Label lbl = new Label(judul);
-        lbl.setFont(Font.font("System", FontWeight.BOLD, 13));
-        lbl.setStyle("-fx-text-fill: #E8F4FD;");
+        lbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: " + TEXT_WHITE + ";");
         box.getChildren().add(lbl);
 
         if (data.isEmpty()) {
-            box.getChildren().add(new Label("Tidak ada data."));
+            Label emptyLbl = new Label("Belum ada data tersedia.");
+            emptyLbl.setStyle("-fx-font-family: 'Segoe UI'; -fx-text-fill: #475569; -fx-font-style: italic;");
+            box.getChildren().add(emptyLbl);
             return box;
         }
 
         int maxVal = data.values().stream().max(Integer::compareTo).orElse(1);
 
         for (Map.Entry<String, Integer> entry : data.entrySet()) {
-            HBox row = new HBox(10);
+            HBox row = new HBox(12);
             row.setAlignment(Pos.CENTER_LEFT);
-            row.setPadding(new Insets(8, 10, 8, 10));
-            row.setStyle("-fx-background-color: #16273A; -fx-background-radius: 8;");
+            row.setPadding(new Insets(10, 12, 10, 12));
+            row.setStyle("-fx-background-color: rgba(30, 41, 59, 0.4); -fx-background-radius: 8; " +
+                    "-fx-border-color: rgba(255,255,255,0.03); -fx-border-width: 1; -fx-border-radius: 8;");
 
-            Label icon = new Label("🏛");
-            icon.setStyle("-fx-font-size: 13px;");
+            StackPane iconBox = new StackPane(new Label("PN")); // Inisial aman sebagai ganti emoji
+            iconBox.getChildren().get(0).setStyle("-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #94A3B8;");
+            iconBox.setPrefSize(28, 28);
+            iconBox.setMinSize(28, 28);
+            iconBox.setStyle("-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 6;");
 
             Label nama = new Label(entry.getKey());
-            nama.setStyle("-fx-text-fill: #D0E8F8; -fx-font-size: 12px;");
-            nama.setMinWidth(140);
+            nama.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #E2E8F0;");
+            nama.setWrapText(false);
 
-            Region spacer = new Region();
-            HBox.setHgrow(spacer, Priority.ALWAYS);
+            HBox.setHgrow(nama, Priority.ALWAYS);
+            nama.setMaxWidth(Double.MAX_VALUE);
 
-            Label jumlah = new Label(entry.getValue() + " kasus");
-            jumlah.setStyle("-fx-text-fill: #5B7B95; -fx-font-size: 11px;");
+            Tooltip tooltip = new Tooltip(entry.getKey());
+            Tooltip.install(nama, tooltip);
 
+            Label jumlah = new Label(entry.getValue() + " kss");
+            jumlah.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 11px; -fx-text-fill: " + TEXT_MUTED + ";");
+            jumlah.setMinWidth(Region.USE_PREF_SIZE);
 
-            double barW = (double) entry.getValue() / maxVal * 60;
+            double barW = ((double) entry.getValue() / maxVal) * 45;
             Region miniBar = new Region();
-            miniBar.setStyle("-fx-background-color: #2DD4BF; -fx-background-radius: 4;");
-            miniBar.setMinWidth(Math.max(4, barW));
+            miniBar.setStyle("-fx-background-color: linear-gradient(to right, #3B82F6, #60A5FA); -fx-background-radius: 4;");
+            miniBar.setMinWidth(Math.max(6, barW));
             miniBar.setMinHeight(4);
             miniBar.setMaxHeight(4);
 
             VBox jumlahBox = new VBox(4, jumlah, miniBar);
             jumlahBox.setAlignment(Pos.CENTER_RIGHT);
 
-            row.getChildren().addAll(icon, nama, spacer, jumlahBox);
+            row.getChildren().addAll(iconBox, nama, jumlahBox);
             box.getChildren().add(row);
         }
 
