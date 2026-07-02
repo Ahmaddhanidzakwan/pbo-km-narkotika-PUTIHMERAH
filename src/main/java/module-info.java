@@ -5,4 +5,6 @@ module com.example.putihmerah {
 
     opens com.example.putihmerah to javafx.fxml;
     exports com.example.putihmerah;
+    exports com.example.putihmerah.model;
+    opens com.example.putihmerah.model to javafx.fxml;
 }
