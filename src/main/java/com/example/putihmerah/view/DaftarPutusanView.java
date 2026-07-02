@@ -2,6 +2,7 @@ package com.example.putihmerah.view;
 
 import com.example.putihmerah.controller.KnowledgeController;
 import com.example.putihmerah.model.Putusan;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -9,8 +10,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 import java.util.List;
 
@@ -22,10 +23,17 @@ public class DaftarPutusanView {
     private TableView<PutusanRow> table;
     private Label labelTotal;
 
+
+    private final String BG_MAIN = "#0B1120";
+    private final String BG_CARD = "#111827";
+    private final String BORDER_COLOR = "#1F2937";
+    private final String TEXT_MUTED = "#94A3B8";
+    private final String TEXT_WHITE = "#F8FAFC";
+
     public DaftarPutusanView(KnowledgeController controller) {
         this.controller = controller;
         this.root = new BorderPane();
-        root.setStyle("-fx-background-color: #0B1622;");
+        root.setStyle("-fx-background-color: " + BG_MAIN + ";");
         build();
         refresh();
     }
@@ -33,76 +41,86 @@ public class DaftarPutusanView {
     public BorderPane getRoot() { return root; }
 
     private void build() {
-        HBox toolbar = new HBox(10);
+        // ── Header / Toolbar ──────────────────────────────────────
+        HBox toolbar = new HBox(16);
         toolbar.setAlignment(Pos.CENTER_LEFT);
-        toolbar.setPadding(new Insets(20, 24, 16, 24));
-        toolbar.setStyle("-fx-background-color: #0B1622;");
+        toolbar.setPadding(new Insets(32, 40, 20, 40));
+        toolbar.setStyle("-fx-background-color: transparent;");
 
-        Label judul = new Label("Daftar Putusan");
-        judul.setFont(Font.font("System", FontWeight.BOLD, 18));
-        judul.setStyle("-fx-text-fill: #E8F4FD;");
+        VBox titleBox = new VBox(4);
+        Label judul = new Label("Daftar Putusan Perkara");
+        judul.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: " + TEXT_WHITE + ";");
 
         labelTotal = new Label("Total: 0 putusan");
-        labelTotal.setStyle("-fx-text-fill: #5B7B95; -fx-font-size: 12px; -fx-padding: 0 0 0 12;");
+        labelTotal.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-text-fill: #38BDF8; " +
+                "-fx-background-color: rgba(56, 189, 248, 0.1); -fx-padding: 4 10 4 10; -fx-background-radius: 12;");
+        titleBox.getChildren().addAll(judul, labelTotal);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Button btnRefresh = buatButton("Refresh", "#16273A", "#4FD1C5");
-        Button btnHapus   = buatButton("Hapus Terpilih", "#2A1418", "#E05A5A");
 
-        toolbar.getChildren().addAll(judul, labelTotal, spacer, btnRefresh, btnHapus);
+        Button btnRefresh = buatButton("Segarkan Data", "rgba(56, 189, 248, 0.1)", "rgba(56, 189, 248, 0.2)", "#38BDF8", "#38BDF8");
+        Button btnHapus   = buatButton("Hapus Terpilih", "#7F1D1D", "#991B1B", "#FCA5A5", "transparent");
+
+        toolbar.getChildren().addAll(titleBox, spacer, btnRefresh, btnHapus);
+
 
         table = new TableView<>();
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        table.setStyle("-fx-background-color: #0F1D2B; -fx-control-inner-background: #0F1D2B;");
-        table.setPlaceholder(new Label("Belum ada data putusan."));
+        // Styling dasar tabel inline
+        table.setStyle("-fx-background-color: " + BG_CARD + "; " +
+                "-fx-control-inner-background: " + BG_CARD + "; " +
+                "-fx-table-cell-border-color: transparent; " +
+                "-fx-table-header-border-color: #1F2937; " +
+                "-fx-border-color: " + BORDER_COLOR + "; -fx-border-radius: 16; -fx-background-radius: 16; -fx-padding: 4;");
+
+        Label placeholder = new Label("Belum ada data putusan yang tercatat.");
+        placeholder.setStyle("-fx-text-fill: " + TEXT_MUTED + "; -fx-font-family: 'Segoe UI'; -fx-font-size: 14px;");
+        table.setPlaceholder(placeholder);
 
         table.getColumns().addAll(
-                kolom("No. Perkara",   "nomorPerkara",  170),
-                kolom("Terdakwa",      "namaTerdakwa",  170),
-                kolom("Pengadilan",    "pengadilan",    150),
-                kolom("Narkotika",     "jenisNarkotika", 100),
-                kolom("Peran",         "peranTerdakwa",  95),
-                kolom("Pasal",         "pasalDilanggar", 170),
+                kolom("No. Perkara",   "nomorPerkara",  150),
+                kolom("Terdakwa",      "namaTerdakwa",  180),
+                kolom("Pengadilan",    "pengadilan",    140),
+                kolom("Narkotika",     "jenisNarkotika", 120),
+                kolom("Peran",         "peranTerdakwa",  110),
                 kolom("Vonis (bln)",   "vonisHukuman",   80),
-                kolom("Denda",         "vonisDenda",     110),
-                kolom("Tanggal",       "tanggalPutusan", 100)
+                kolom("Denda",         "vonisDenda",     120)
         );
+
+
+        table.setRowFactory(tv -> {
+            TableRow<PutusanRow> row = new TableRow<>();
+            row.styleProperty().bind(Bindings.when(row.selectedProperty())
+                    .then("-fx-background-color: #1E293B; -fx-text-background-color: #F8FAFC;")
+                    .otherwise(Bindings.when(row.hoverProperty())
+                            .then("-fx-background-color: rgba(30, 41, 59, 0.4); -fx-text-background-color: #E2E8F0;")
+                            .otherwise("-fx-background-color: transparent; -fx-text-background-color: #CBD5E1;")));
+            return row;
+        });
+
 
         VBox detailPanel = buildDetailPanel();
 
-        table.getSelectionModel().selectedItemProperty().addListener(
-                (obs, old, row) -> {
-                    if (row != null) tampilkanDetail(row.getPutusan(), detailPanel);
-                }
-        );
-
-        btnRefresh.setOnAction(e -> refresh());
-        btnHapus.setOnAction(e -> {
-            PutusanRow selected = table.getSelectionModel().getSelectedItem();
-            if (selected == null) {
-                showAlert(Alert.AlertType.WARNING, "Pilih dulu baris yang akan dihapus.");
-                return;
-            }
-            Alert konfirm = new Alert(Alert.AlertType.CONFIRMATION,
-                    "Hapus putusan: " + selected.getNomorPerkara() + "?",
-                    ButtonType.YES, ButtonType.NO);
-            konfirm.setTitle("Konfirmasi Hapus");
-            konfirm.showAndWait().ifPresent(bt -> {
-                if (bt == ButtonType.YES) {
-                    controller.hapusPutusan(selected.getNomorPerkara());
-                    refresh();
-                    showAlert(Alert.AlertType.INFORMATION, "Putusan berhasil dihapus.");
-                }
-            });
+        table.getSelectionModel().selectedItemProperty().addListener((obs, old, row) -> {
+            if (row != null) tampilkanDetail(row.getPutusan(), detailPanel);
         });
 
-        BorderPane.setMargin(table, new Insets(0, 24, 16, 24));
+
+        btnRefresh.setOnAction(e -> refresh());
+        btnHapus.setOnAction(e -> hapusAksi());
+
+
+        BorderPane.setMargin(table, new Insets(0, 0, 0, 0));
+
 
         SplitPane split = new SplitPane(table, detailPanel);
-        split.setDividerPositions(0.65);
-        split.setStyle("-fx-background-color: #0B1622;");
+        split.setDividerPositions(0.70); // 70% Tabel, 30% Detail
+        split.setStyle("-fx-background-color: " + BG_MAIN + "; -fx-padding: 0 40 40 40;");
+
+
+        SplitPane.setResizableWithParent(detailPanel, false);
 
         root.setTop(toolbar);
         root.setCenter(split);
@@ -116,70 +134,142 @@ public class DaftarPutusanView {
         labelTotal.setText("Total: " + list.size() + " putusan");
     }
 
+    private void hapusAksi() {
+        PutusanRow selected = table.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "Peringatan", "Pilih baris putusan yang akan dihapus terlebih dahulu.");
+            return;
+        }
+        Alert konfirm = new Alert(Alert.AlertType.CONFIRMATION,
+                "Apakah Anda yakin ingin menghapus perkara " + selected.getNomorPerkara() + " (" + selected.getNamaTerdakwa() + ")?",
+                ButtonType.YES, ButtonType.NO);
+        konfirm.setTitle("Konfirmasi Hapus");
+        konfirm.setHeaderText("Menghapus Putusan");
+        DialogPane dialogPane = konfirm.getDialogPane();
+        dialogPane.setStyle("-fx-font-family: 'Segoe UI';");
+
+        konfirm.showAndWait().ifPresent(bt -> {
+            if (bt == ButtonType.YES) {
+                controller.hapusPutusan(selected.getNomorPerkara());
+                refresh();
+                // Kosongkan panel detail
+                table.getSelectionModel().clearSelection();
+            }
+        });
+    }
+
+
     private VBox buildDetailPanel() {
-        VBox panel = new VBox(10);
-        panel.setPadding(new Insets(16));
-        panel.setStyle("-fx-background-color: #0F1D2B;");
-        Label placeholder = new Label("Klik baris untuk melihat detail putusan");
-        placeholder.setStyle("-fx-text-fill: #5B7B95; -fx-font-size: 13px;");
-        placeholder.setWrapText(true);
-        panel.getChildren().add(placeholder);
+        VBox panel = new VBox(16);
+        panel.setPadding(new Insets(24));
+
+        panel.setStyle("-fx-background-color: " + BG_CARD + "; -fx-border-color: " + BORDER_COLOR + "; " +
+                "-fx-border-width: 1; -fx-background-radius: 16; -fx-border-radius: 16; " +
+                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);");
+
+        tampilkanKosong(panel);
         return panel;
+    }
+
+    private void tampilkanKosong(VBox panel) {
+        panel.getChildren().clear();
+        panel.setAlignment(Pos.CENTER);
+
+        Label icon = new Label("📄");
+        icon.setStyle("-fx-font-size: 32px; -fx-text-fill: #334155;");
+
+        Label placeholder = new Label("Pilih putusan di tabel untuk melihat rincian detailnya.");
+        placeholder.setStyle("-fx-text-fill: " + TEXT_MUTED + "; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-text-alignment: center;");
+        placeholder.setWrapText(true);
+
+        panel.getChildren().addAll(icon, placeholder);
     }
 
     private void tampilkanDetail(Putusan p, VBox panel) {
         panel.getChildren().clear();
+        panel.setAlignment(Pos.TOP_LEFT);
 
-        Label judul = new Label("Detail Putusan");
-        judul.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4FD1C5;");
-        panel.getChildren().add(judul);
+        VBox header = new VBox(4);
+        Label lblTerdakwa = new Label(p.getNamaTerdakwa());
+        lblTerdakwa.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: " + TEXT_WHITE + ";");
+        lblTerdakwa.setWrapText(true);
 
+        Label lblPerkara = new Label(p.getNomorPerkara() + "  •  " + p.getPengadilan());
+        lblPerkara.setStyle("-fx-font-family: 'Segoe UI'; -fx-font-size: 12px; -fx-text-fill: #38BDF8; -fx-font-weight: bold;");
+
+        header.getChildren().addAll(lblTerdakwa, lblPerkara);
+
+
+        Region divider = new Region();
+        divider.setMinHeight(1);
+        divider.setStyle("-fx-background-color: " + BORDER_COLOR + ";");
+        VBox.setMargin(divider, new Insets(8, 0, 8, 0));
+
+
+        VBox konten = new VBox(12);
         String[][] fields = {
-                {"No. Perkara",     p.getNomorPerkara()},
-                {"Pengadilan",      p.getPengadilan()},
                 {"Tanggal Putusan", p.getTanggalPutusan()},
-                {"Nama Terdakwa",   p.getNamaTerdakwa()},
                 {"Umur Terdakwa",   p.getUmurTerdakwa() + " tahun"},
-                {"Jenis Narkotika", p.getJenisNarkotika()},
-                {"Berat BB",        String.format("%.2f gram", p.getBeratBarangBukti())},
+                {"Jenis Narkotika", p.getJenisNarkotika() + " (" + String.format("%.2f gram", p.getBeratBarangBukti()) + ")"},
                 {"Pasal Dilanggar", p.getPasalDilanggar()},
-                {"Peran Terdakwa",  p.getPeranTerdakwa()},
+                {"Peran",           p.getPeranTerdakwa()},
                 {"Vonis Hukuman",   p.getVonisHukuman() + " bulan (" + p.getKategoriHukuman() + ")"},
                 {"Vonis Denda",     String.format("Rp %,.2f", p.getVonisDenda())},
-                {"Nama Hakim",      p.getNamaHakim()},
+                {"Hakim Ketua",     p.getNamaHakim()}
         };
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10); grid.setVgap(8);
-        for (int i = 0; i < fields.length; i++) {
-            Label lbl = new Label(fields[i][0]);
-            lbl.setStyle("-fx-text-fill: #5B7B95; -fx-font-size: 11px; -fx-min-width: 110;");
-            Label val = new Label(fields[i][1]);
-            val.setStyle("-fx-text-fill: #E0F0FF; -fx-font-size: 11px;");
-            val.setWrapText(true);
-            grid.add(lbl, 0, i); grid.add(val, 1, i);
+        for (String[] field : fields) {
+            VBox row = new VBox(2);
+            Label lblLabel = new Label(field[0].toUpperCase());
+            lblLabel.setStyle("-fx-text-fill: " + TEXT_MUTED + "; -fx-font-family: 'Segoe UI'; -fx-font-size: 10px; -fx-font-weight: bold; -fx-letter-spacing: 1px;");
+
+            Label lblValue = new Label(field[1]);
+            lblValue.setStyle("-fx-text-fill: #E2E8F0; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px;");
+            lblValue.setWrapText(true);
+
+            row.getChildren().addAll(lblLabel, lblValue);
+            konten.getChildren().add(row);
         }
-        panel.getChildren().add(grid);
+
+        ScrollPane scroll = new ScrollPane(konten);
+        scroll.setFitToWidth(true);
+        scroll.setStyle("-fx-background: " + BG_CARD + "; -fx-background-color: " + BG_CARD + "; -fx-border-color: transparent;");
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+
+        panel.getChildren().addAll(header, divider, scroll);
     }
 
     private TableColumn<PutusanRow, String> kolom(String judul, String prop, double minW) {
         TableColumn<PutusanRow, String> col = new TableColumn<>(judul);
         col.setCellValueFactory(new PropertyValueFactory<>(prop));
         col.setMinWidth(minW);
+        col.setStyle("-fx-alignment: CENTER-LEFT; -fx-font-family: 'Segoe UI'; -fx-font-size: 13px;");
         return col;
     }
 
-    private Button buatButton(String teks, String bgColor, String textColor) {
+
+    private Button buatButton(String teks, String bgNormal, String bgHover, String textCol, String borderCol) {
         Button btn = new Button(teks);
-        btn.setStyle("-fx-background-color: " + bgColor + "; -fx-text-fill: " + textColor + "; " +
-                "-fx-font-size: 12px; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 7 16;");
+        String baseStyle = "-fx-background-color: " + bgNormal + "; -fx-text-fill: " + textCol + "; " +
+                "-fx-font-family: 'Segoe UI'; -fx-font-size: 13px; -fx-font-weight: bold; " +
+                "-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: " + borderCol + "; -fx-cursor: hand; -fx-padding: 8 16;";
+        String hoverStyle = baseStyle.replace(bgNormal, bgHover);
+
+        btn.setStyle(baseStyle);
+        btn.setOnMouseEntered(e -> btn.setStyle(hoverStyle));
+        btn.setOnMouseExited(e -> btn.setStyle(baseStyle));
         return btn;
     }
 
-    private void showAlert(Alert.AlertType type, String msg) {
+    private void showAlert(Alert.AlertType type, String title, String msg) {
         Alert a = new Alert(type, msg);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        DialogPane dialogPane = a.getDialogPane();
+        dialogPane.setStyle("-fx-font-family: 'Segoe UI';");
         a.showAndWait();
     }
+
 
     public static class PutusanRow {
         private final Putusan putusan;
@@ -196,7 +286,7 @@ public class DaftarPutusanView {
             this.peranTerdakwa  = new SimpleStringProperty(p.getPeranTerdakwa());
             this.pasalDilanggar = new SimpleStringProperty(p.getPasalDilanggar());
             this.vonisHukuman   = new SimpleStringProperty(String.valueOf(p.getVonisHukuman()));
-            this.vonisDenda     = new SimpleStringProperty(String.format("%,.2f", p.getVonisDenda()));
+            this.vonisDenda     = new SimpleStringProperty(String.format("Rp %,.2f", p.getVonisDenda()));
             this.tanggalPutusan = new SimpleStringProperty(p.getTanggalPutusan());
         }
 
@@ -210,15 +300,5 @@ public class DaftarPutusanView {
         public String getVonisHukuman()   { return vonisHukuman.get(); }
         public String getVonisDenda()     { return vonisDenda.get(); }
         public String getTanggalPutusan() { return tanggalPutusan.get(); }
-
-        public SimpleStringProperty nomorPerkaraProperty()   { return nomorPerkara; }
-        public SimpleStringProperty namaTerdakwaProperty()   { return namaTerdakwa; }
-        public SimpleStringProperty pengadilanProperty()     { return pengadilan; }
-        public SimpleStringProperty jenisNarkotikaProperty() { return jenisNarkotika; }
-        public SimpleStringProperty peranTerdakwaProperty()  { return peranTerdakwa; }
-        public SimpleStringProperty pasalDilanggarProperty() { return pasalDilanggar; }
-        public SimpleStringProperty vonisHukumanProperty()   { return vonisHukuman; }
-        public SimpleStringProperty vonisDendaProperty()     { return vonisDenda; }
-        public SimpleStringProperty tanggalPutusanProperty() { return tanggalPutusan; }
     }
 }
