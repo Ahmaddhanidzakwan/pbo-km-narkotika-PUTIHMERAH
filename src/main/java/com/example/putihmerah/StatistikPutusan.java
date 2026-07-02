@@ -73,3 +73,37 @@ public class StatistikPutusan implements IPelaporan {
         for (String baris : distribusiPeran) {
             System.out.println("  - " + baris);
         }
+        System.out.println("==================================================");
+    }
+
+    public int getTotalPutusan()                 { return totalPutusan; }
+    public double getRataRataVonis()              { return rataRataVonis; }
+    public double getRataRataDenda()              { return rataRataDenda; }
+    public String getJenisNarkotikaTerbanyak()    { return jenisNarkotikaTerbanyak; }
+    public String[] getDistribusiPeran()          { return distribusiPeran; }
+
+    public Putusan getVonisTertinggi() {
+        return daftar.stream()
+                .max((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
+                .orElse(null);
+    }
+
+    public Putusan getVonisTerendah() {
+        return daftar.stream()
+                .min((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
+                .orElse(null);
+    }
+
+    public Map<String, Integer> getDistribusiJenisNarkotika() {
+        Map<String, Integer> map = new HashMap<>();
+        for (Putusan p : daftar) map.merge(p.getJenisNarkotika(), 1, Integer::sum);
+        return map;
+    }
+
+    public Map<String, Integer> getDistribusiPengadilan() {
+        Map<String, Integer> map = new HashMap<>();
+        for (Putusan p : daftar) map.merge(p.getPengadilan(), 1, Integer::sum);
+        return map;
+    }
+}
+
