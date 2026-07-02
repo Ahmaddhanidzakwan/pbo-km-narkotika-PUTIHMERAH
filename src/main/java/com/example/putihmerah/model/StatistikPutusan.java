@@ -47,9 +47,9 @@ public class StatistikPutusan implements IPelaporan {
         rataRataDenda = totalDenda / daftar.size();
 
         jenisNarkotikaTerbanyak = freqNarkotika.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(e -> e.getKey() + " (" + e.getValue() + " kasus)")
-                .orElse("Tidak ada data");
+            .max(Map.Entry.comparingByValue())
+            .map(e -> e.getKey() + " (" + e.getValue() + " kasus)")
+            .orElse("Tidak ada data");
 
         distribusiPeran = new String[freqPeran.size()];
         int idx = 0;
@@ -82,14 +82,14 @@ public class StatistikPutusan implements IPelaporan {
 
     public Putusan getVonisTertinggi() {
         return daftar.stream()
-                .max((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
-                .orElse(null);
+            .max((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
+            .orElse(null);
     }
 
     public Putusan getVonisTerendah() {
         return daftar.stream()
-                .min((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
-                .orElse(null);
+            .min((a, b) -> Integer.compare(a.getVonisHukuman(), b.getVonisHukuman()))
+            .orElse(null);
     }
 
     public Map<String, Integer> getDistribusiJenisNarkotika() {

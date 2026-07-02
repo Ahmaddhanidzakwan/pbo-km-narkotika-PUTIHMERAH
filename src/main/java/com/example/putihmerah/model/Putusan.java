@@ -91,7 +91,7 @@ public class Putusan {
 
     public void tampilkan() {
         System.out.printf("%-22s | %-22s | %-15s | %-12s | %4d bln%n",
-                nomorPerkara, namaTerdakwa, pengadilan, jenisNarkotika, vonisHukuman);
+            nomorPerkara, namaTerdakwa, pengadilan, jenisNarkotika, vonisHukuman);
     }
 
     public void tampilkan(boolean detail) {
@@ -108,21 +108,21 @@ public class Putusan {
     @Override
     public String toString() {
         return String.format(
-                "Nomor Perkara   : %s%n" +
-                        "Pengadilan      : %s%n" +
-                        "Tanggal Putusan : %s%n" +
-                        "Terdakwa        : %s (%d tahun)%n" +
-                        "Jenis Narkotika : %s%n" +
-                        "Berat BB        : %.2f gram%n" +
-                        "Pasal Dilanggar : %s%n" +
-                        "Peran           : %s%n" +
-                        "Vonis           : %d bulan (Kategori: %s)%n" +
-                        "Denda           : Rp %,.2f%n" +
-                        "Hakim           : %s",
-                nomorPerkara, pengadilan, tanggalPutusan,
-                namaTerdakwa, umurTerdakwa, jenisNarkotika,
-                beratBarangBukti, pasalDilanggar, peranTerdakwa,
-                vonisHukuman, getKategoriHukuman(), vonisDenda, namaHakim
+            "Nomor Perkara   : %s%n" +
+            "Pengadilan      : %s%n" +
+            "Tanggal Putusan : %s%n" +
+            "Terdakwa        : %s (%d tahun)%n" +
+            "Jenis Narkotika : %s%n" +
+            "Berat BB        : %.2f gram%n" +
+            "Pasal Dilanggar : %s%n" +
+            "Peran           : %s%n" +
+            "Vonis           : %d bulan (Kategori: %s)%n" +
+            "Denda           : Rp %,.2f%n" +
+            "Hakim           : %s",
+            nomorPerkara, pengadilan, tanggalPutusan,
+            namaTerdakwa, umurTerdakwa, jenisNarkotika,
+            beratBarangBukti, pasalDilanggar, peranTerdakwa,
+            vonisHukuman, getKategoriHukuman(), vonisDenda, namaHakim
         );
     }
 }

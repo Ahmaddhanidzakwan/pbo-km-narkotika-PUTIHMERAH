@@ -1,4 +1,4 @@
-module com.example.putihmerah. {
+module com.example.putihmerah {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
