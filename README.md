@@ -28,7 +28,7 @@ Aplikasi ini mengolah dataset putusan pengadilan pidana narkotika untuk:
 
 Aplikasi dijalankan sebagai **JavaFX Desktop Application** dengan navigasi **sidebar** (Dashboard, Daftar Putusan, Tambah Putusan, Cari & Filter, Statistik), dan menerapkan konsep OOP: encapsulation, inheritance, interface, method overloading, method overriding, static field/method, exception handling, dan collection (ArrayList).
 
-**Sumber Data:** Dataset berisi 51 putusan pidana narkotika (Pid.Sus) dari berbagai Pengadilan Negeri di Indonesia, tahun 2024–2025, dimuat langsung ke aplikasi melalui `util/DataDummy.java`.
+**Sumber Data:** Dataset berisi 51 putusan pidana narkotika (Pid.Sus) dari berbagai Pengadilan Negeri di Indonesia(Sesuai Data yang di sediakan di modul tugas besar PBO), tahun 2024–2025, dimuat langsung ke aplikasi melalui `util/DataDummy.java`.
 
 ---
 
@@ -163,4 +163,4 @@ Video mencakup:
 
 ## 📝 Lisensi & Atribusi
 
-Proyek ini dibuat untuk keperluan akademik (Tugas Besar PBO, Universitas Muhammadiyah Malang). Dataset bersumber dari putusan pengadilan publik (Pid.Sus) berbagai Pengadilan Negeri di Indonesia, tahun 2024–2025.
+Proyek ini dibuat untuk keperluan akademik (Tugas Besar PBO, Universitas Muhammadiyah Malang). Dataset bersumber dari putusan pengadilan publik (Pid.Sus) berbagai Pengadilan Negeri di Indonesia(Sesuai dengan data yang di berikan di modul Tugas Besar PBO), tahun 2024–2025.
